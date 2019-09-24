@@ -2,110 +2,186 @@
 #include <Windows.h>
 using namespace std;
 
+/*int getBinary (int a, unsigned short int i, bool isSigned)
+{
+	bool r;
+	if (isSigned == 1)
+	{
+		r = a & (1U << --i);
+		cout << r << " ";
+	}
+	r = a & (1U << --i);
+	cout << r << " ";
+	SetConsoleTextAttribute(h, 14);
+	for (--i; i >= 0; --i)
+	{
+		r = a & (1U << i);
+		cout << r;
+	}
+	SetConsoleTextAttribute(h, 7);
+	return 0;
+}*/
+
+union DoubleUnion
+{
+	double d;
+	int a[2];
+};
+
 int main()
 {
 	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 	short i, intType;
+	DoubleUnion u;
 	double check;
-	bool err = false;
+	bool err = true;
 	setlocale(0, "");
 
-	cout << "Выберите тип:\n 1 - int\n 2 - short int\n 3 - unsigned int\n";
-	cin >> intType;
-	
-	if (intType == 1)
+	while (err == true)
 	{
-		int a1;
-		cout << "Введите число int\n";
-		cin >> check;
-
-		if (check >= -signed(2147483648) && check <= 2147483647 && check == int(check))
+		cout << "Выберите тип (введите натуральное число от 1 до 3):\n 1 - int\n 2 - short int\n 3 - unsigned int\n 4 - double\n";
+		cin >> intType;
+		if (intType < 1 || intType > 5)
 		{
-			a1 = int(check);
+			cout << "Тип выбран некорректно. Мой 8-летний брат знает, что такое натуральное число от 1 до 3, А ТЫ - НЕТ!\n";
+			continue;
 		}
-		else
+		if (intType >= 1 || intType <= 5)
 		{
-			err = true;
-		};
-
-		if (err == false)
-		{
-			i = 32;
-			bool r;
-			r = a1 & (1U << --i);
-			cout << r << " ";
-			SetConsoleTextAttribute(h, 14);
-			for (--i; i >= 0; --i)
+			if (intType == 1)
 			{
-				r = a1 & (1U << i);
-				cout << r;
+				int a1;
+				cout << "Введите число int\n";
+				cin >> check;
+
+				if (check >= -signed(2147483648) && check <= 2147483647 && check == int(check))
+				{
+					a1 = int(check);
+					err = false;
+				}
+
+				if (err == false)
+				{
+					i = 32;
+					bool r;
+					r = a1 & (1U << --i);
+					cout << r << " ";
+					SetConsoleTextAttribute(h, 14);
+					for (--i; i >= 0; --i)
+					{
+						r = a1 & (1U << i);
+						if (i % 4 == 0)
+						{
+							cout << r << " ";
+						}
+						else
+						{
+							cout << r;
+						}
+
+
+					}
+					SetConsoleTextAttribute(h, 7);
+				}
 			}
-			SetConsoleTextAttribute(h, 7);
-		}
-	}
-
-	if (intType == 2)
-	{
-		short a2;
-		cout << "Введите число short int\n";
-		cin >> check;
-
-		if (check >= -(32768) && check <= 32767 && check == int(check))
-		{
-			a2 = short(check);
-		}
-		else
-		{
-			err = true;
-		};
-
-		if (err == false)
-		{
-			i = 16;
-			bool r;
-			r = a2 & (1U << --i);
-			cout << r << " ";
-			SetConsoleTextAttribute(h, 14);
-			for (--i; i >= 0; --i)
+			if (intType == 2)
 			{
-				r = a2 & (1U << i);
-				cout << r;
+				short a2;
+				cout << "Введите число short int\n";
+				cin >> check;
+
+				if (check >= -(32768) && check <= 32767 && check == int(check))
+				{
+					a2 = short(check);
+					err = false;
+				}
+
+				if (err == false)
+				{
+					i = 16;
+					bool r;
+					r = a2 & (1U << --i);
+					cout << r << " ";
+					SetConsoleTextAttribute(h, 14);
+					for (--i; i >= 0; --i)
+					{
+						r = a2 & (1U << i);
+						if (i % 4 == 0)
+						{
+							cout << r << " ";
+						}
+						else
+						{
+							cout << r;
+						}
+					}
+					SetConsoleTextAttribute(h, 7);
+				};
 			}
-			SetConsoleTextAttribute(h, 7);
-		};
-	}
-	if (intType == 3)
-	{
-		unsigned int a3;
-		cout << "Введите число unsigned int\n";
-		cin >> check;
-
-		if (check >= 0 && check <= 4294967295 && check == unsigned int(check))
-		{
-			a3 = unsigned int (check);
-		}
-		else
-		{
-			err = true;
-		};
-
-		if (err == false)
-		{
-			i = 32;
-			bool r;
-			SetConsoleTextAttribute(h, 14);
-			for (--i; i >= 0; --i)
+			if (intType == 3)
 			{
-				r = a3 & (1U << i);
-				cout << r;
-			}
-			SetConsoleTextAttribute(h, 7);
-		}
-	}
+				unsigned int a3;
+				cout << "Введите число unsigned int\n";
+				cin >> check;
 
-	if (err == true)
-	{
-		cout << "Ошибка типа: число введено некорректно. Пожалуйста, введите другое число или выберите другую модернизацию типа";
-	}
-	
+				if (check >= 0 && check <= 4294967295 && check == unsigned int(check))
+				{
+					a3 = unsigned int(check);
+					err = false;
+				}
+
+				if (err == false)
+				{
+					i = 32;
+					bool r;
+					SetConsoleTextAttribute(h, 14);
+					for (--i; i >= 0; --i)
+					{
+						r = a3 & (1U << i);
+						if (i % 4 == 0)
+						{
+							cout << r << " ";
+						}
+						else
+						{
+							cout << r;
+						}
+					}
+					SetConsoleTextAttribute(h, 7);
+				}
+
+			}
+			if (intType == 4)
+			{
+				err = false;
+				cout << "Введите число double\n";
+				cin >> u.d;
+				i = 64;
+				bool r;
+				r = u.a[0] & (1U << --i);
+				cout << r << " ";
+				SetConsoleTextAttribute(h, 14);
+				for (short n = 0; n <= 1; ++n)
+				{
+					for (--i; i >= 0; --i)
+					{
+						r = u.a[n] & (1U << i);
+						if (i % 4 == 0)
+						{
+							cout << r << " ";
+						}
+						else
+						{
+							cout << r;
+						}
+						if (i == 52)
+						{
+							SetConsoleTextAttribute(h, 9);
+						}
+					};
+				};
+				SetConsoleTextAttribute(h, 7);
+			};
+			};
+		};
 }
