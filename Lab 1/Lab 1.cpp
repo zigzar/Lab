@@ -45,7 +45,7 @@ int main()
 
 	while (err == true)
 	{
-		cout << "Выберите тип (введите натуральное число от 1 до 3):\n 1 - int\n 2 - short int\n 3 - unsigned int\n 4 - double\n";
+		cout << "Выберите тип (введите натуральное число от 1 до 3):\n 1 - int\n 2 - short int\n 3 - unsigned int\n 4 - double\n 5 - float\n";
 		cin >> intType;
 		if (intType < 1 || intType > 5)
 		{
@@ -172,7 +172,7 @@ int main()
 					for (--i; i >= 0; --i)
 					{
 						r = du.a[n] & (1U << i);
-						if (i % 4 == 0)
+						if ((i+1) % 4 == 0)
 						{
 							cout << r << " ";
 						}
@@ -180,7 +180,7 @@ int main()
 						{
 							cout << r;
 						}
-						if (i == 52)
+						if (i == 51)
 						{
 							SetConsoleTextAttribute(h, 9);
 						}
@@ -201,7 +201,7 @@ int main()
 				for (--i; i >= 0; --i)
 					{
 						r = fu.a & (1U << i);
-						if (i % 4 == 0)
+						if ((i+1) % 4 == 0)
 						{
 							cout << r << " ";
 						}
