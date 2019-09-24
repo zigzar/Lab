@@ -27,12 +27,18 @@ union DoubleUnion
 	double d;
 	int a[2];
 };
+union FloatUnion
+{
+	float f;
+	int a;
+};
 
 int main()
 {
 	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 	short i, intType;
-	DoubleUnion u;
+	DoubleUnion du;
+	FloatUnion fu;
 	double check;
 	bool err = true;
 	setlocale(0, "");
@@ -155,17 +161,17 @@ int main()
 			{
 				err = false;
 				cout << "Введите число double\n";
-				cin >> u.d;
+				cin >> du.d;
 				i = 64;
 				bool r;
-				r = u.a[0] & (1U << --i);
+				r = du.a[0] & (1U << --i);
 				cout << r << " ";
 				SetConsoleTextAttribute(h, 14);
 				for (short n = 0; n <= 1; ++n)
 				{
 					for (--i; i >= 0; --i)
 					{
-						r = u.a[n] & (1U << i);
+						r = du.a[n] & (1U << i);
 						if (i % 4 == 0)
 						{
 							cout << r << " ";
@@ -182,6 +188,35 @@ int main()
 				};
 				SetConsoleTextAttribute(h, 7);
 			};
+			if (intType == 5)
+			{
+				err = false;
+				cout << "Введите число float\n";
+				cin >> fu.f;
+				i = 64;
+				bool r;
+				r = fu.a & (1U << --i);
+				cout << r << " ";
+				SetConsoleTextAttribute(h, 14);
+				for (--i; i >= 0; --i)
+					{
+						r = fu.a & (1U << i);
+						if (i % 4 == 0)
+						{
+							cout << r << " ";
+						}
+						else
+						{
+							cout << r;
+						}
+						if (i == 23)
+						{
+							SetConsoleTextAttribute(h, 9);
+						}
+					};
+				SetConsoleTextAttribute(h, 7);
 			};
+
 		};
+	};
 }
