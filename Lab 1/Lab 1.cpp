@@ -22,6 +22,19 @@ using namespace std;
 	return 0;
 }*/
 
+/*int inputCheck(char inp[256])
+{
+	short g;
+	bool isZero = true;
+	for (int g = 0; inp[g] != '\0'; g++)
+		if (inp[g] < 48 || inp[g]>57)
+		{
+			std::cout << "Ошибка ввода числа. Пожалуйста введите число, используя арабские цифры";
+			return false;
+		}
+	return strtod(inp, endptr);
+}*/
+
 union DoubleUnion
 {
 	double d;
@@ -36,30 +49,33 @@ union FloatUnion
 int main()
 {
 	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
-	short i, intType;
+	short i;
+	int intType;
 	DoubleUnion du;
 	FloatUnion fu;
 	double check;
 	bool err = true;
+	char input[256];
 	setlocale(0, "");
 
 	while (err == true)
 	{
-		cout << "Выберите тип (введите натуральное число от 1 до 3):\n 1 - int\n 2 - short int\n 3 - unsigned int\n 4 - double\n 5 - float\n";
-		cin >> intType;
+		cout << "Объем памяти для Double: " << sizeof(du) << " байт\n";
+		cout << "Объем памяти для Float: " << sizeof(fu) << " байта\n\n";
+		cout << "Выберите тип (введите натуральное число от 1 до 5 в естественном виде арабскими цифрами):\n 1 - int\n 2 - short int\n 3 - unsigned int\n 4 - double\n 5 - float\n";
+		cin >> input;
+		intType = atoi(input);
 		if (intType < 1 || intType > 5)
 		{
-			cout << "Тип выбран некорректно. Мой 8-летний брат знает, что такое натуральное число от 1 до 3, А ТЫ - НЕТ!\n";
-			continue;
-		}
+			cout << "Тип выбран некорректно. Повторите попытку\n";
+		};
 		if (intType >= 1 || intType <= 5)
 		{
 			if (intType == 1)
 			{
 				int a1;
-				cout << "Введите число int\n";
+				cout << "Введите число int в естественном виде арабскими цифрами\n";
 				cin >> check;
-
 				if (check >= -signed(2147483648) && check <= 2147483647 && check == int(check))
 				{
 					a1 = int(check);
@@ -89,11 +105,12 @@ int main()
 					}
 					SetConsoleTextAttribute(h, 7);
 				}
+				else { cout << "Ошибка типа. Пожалуйста, введите корректное значение или выберите другой тип.\n"; };
 			}
 			if (intType == 2)
 			{
 				short a2;
-				cout << "Введите число short int\n";
+				cout << "Введите число short int в естественном виде арабскими цифрами\n";
 				cin >> check;
 
 				if (check >= -(32768) && check <= 32767 && check == int(check))
@@ -122,12 +139,13 @@ int main()
 						}
 					}
 					SetConsoleTextAttribute(h, 7);
-				};
+				}
+				else { cout << "Ошибка типа. Пожалуйста, введите корректное значение или выберите другой тип.\n"; };
 			}
 			if (intType == 3)
 			{
 				unsigned int a3;
-				cout << "Введите число unsigned int\n";
+				cout << "Введите число unsigned int в естественном виде арабскими цифрами\n";
 				cin >> check;
 
 				if (check >= 0 && check <= 4294967295 && check == unsigned int(check))
@@ -155,12 +173,13 @@ int main()
 					}
 					SetConsoleTextAttribute(h, 7);
 				}
+				else { cout << "Ошибка типа. Пожалуйста, введите корректное значение или выберите другой тип.\n"; };
 
 			}
 			if (intType == 4)
 			{
 				err = false;
-				cout << "Введите число double\n";
+				cout << "Введите число double в естественном виде арабскими цифрами\n";
 				cin >> du.d;
 				i = 64;
 				bool r;
@@ -191,9 +210,9 @@ int main()
 			if (intType == 5)
 			{
 				err = false;
-				cout << "Введите число float\n";
+				cout << "Введите число float в естественном виде арабскими цифрами\n";
 				cin >> fu.f;
-				i = 64;
+				i = 32;
 				bool r;
 				r = fu.a & (1U << --i);
 				cout << r << " ";
@@ -216,7 +235,7 @@ int main()
 					};
 				SetConsoleTextAttribute(h, 7);
 			};
+		}
 
-		};
 	};
 }
