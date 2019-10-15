@@ -186,11 +186,25 @@ int main()
 				r = du.a[0] & (1U << --i);
 				cout << r << " ";
 				SetConsoleTextAttribute(h, 14);
-				for (short n = 0; n <= 1; ++n)
+				for (--i; i >= 32; --i)
 				{
-					for (--i; i >= 0; --i)
+					r = du.a[1] & (1U << i);
+					if ((i + 1) % 4 == 0)
 					{
-						r = du.a[n] & (1U << i);
+						cout << r << " ";
+					}
+					else
+					{
+						cout << r;
+					}
+					if (i == 51)
+					{
+						SetConsoleTextAttribute(h, 9);
+					}
+				};
+				for (--i; i >= 0; --i)
+					{
+						r = du.a[0] & (1U << i);
 						if ((i+1) % 4 == 0)
 						{
 							cout << r << " ";
@@ -203,7 +217,6 @@ int main()
 						{
 							SetConsoleTextAttribute(h, 9);
 						}
-					};
 				};
 				SetConsoleTextAttribute(h, 7);
 			};
