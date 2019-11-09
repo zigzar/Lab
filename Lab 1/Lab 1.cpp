@@ -1,5 +1,8 @@
 ﻿#include <iostream>
 #include <Windows.h>
+#include <cstdlib>
+#include <cerrno> 
+
 using namespace std;
 
 /*int getBinary (int a, unsigned short int i, bool isSigned)
@@ -24,15 +27,13 @@ using namespace std;
 
 /*int inputCheck(char inp[256])
 {
-	short g;
-	bool isZero = true;
 	for (int g = 0; inp[g] != '\0'; g++)
-		if (inp[g] < 48 || inp[g]>57)
+		if (inp[g] < 48 || inp[g]>57 || !(inp[g]==46))
 		{
 			std::cout << "Ошибка ввода числа. Пожалуйста введите число, используя арабские цифры";
 			return false;
 		}
-	return strtod(inp, endptr);
+	return strtod(inp, NULL);
 }*/
 
 union DoubleUnion
@@ -75,7 +76,13 @@ int main()
 			{
 				int a1;
 				cout << "Введите число int в естественном виде арабскими цифрами\n";
-				cin >> check;
+				cin >> input;
+				check = strtod(input,NULL);
+				if (errno == ERANGE)
+				{
+					cout << "Ошибка допустимых значений";
+					return 0;
+				}
 				if (check >= -signed(2147483648) && check <= 2147483647 && check == int(check))
 				{
 					a1 = int(check);
@@ -105,7 +112,7 @@ int main()
 					}
 					SetConsoleTextAttribute(h, 7);
 				}
-				else { cout << "Ошибка типа. Пожалуйста, введите корректное значение или выберите другой тип.\n"; };
+				else cout << "Ошибка типа. Пожалуйста, введите корректное значение или выберите другой тип.\n"; 
 			}
 			if (intType == 2)
 			{
@@ -140,7 +147,7 @@ int main()
 					}
 					SetConsoleTextAttribute(h, 7);
 				}
-				else { cout << "Ошибка типа. Пожалуйста, введите корректное значение или выберите другой тип.\n"; };
+				else cout << "Ошибка типа. Пожалуйста, введите корректное значение или выберите другой тип.\n"; 
 			}
 			if (intType == 3)
 			{
@@ -173,14 +180,15 @@ int main()
 					}
 					SetConsoleTextAttribute(h, 7);
 				}
-				else { cout << "Ошибка типа. Пожалуйста, введите корректное значение или выберите другой тип.\n"; };
+				else cout << "Ошибка типа. Пожалуйста, введите корректное значение или выберите другой тип.\n"; 
 
 			}
 			if (intType == 4)
 			{
 				err = false;
 				cout << "Введите число double в естественном виде арабскими цифрами\n";
-				cin >> du.d;
+				cin >> input;
+				du.d = strtod(input, NULL);
 				i = 64;
 				bool r;
 				r = du.a[0] & (1U << --i);
